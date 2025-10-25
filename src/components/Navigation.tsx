@@ -2,10 +2,13 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
+import { Badge } from "@/components/ui/badge";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { openCart, totalItems } = useCart();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -42,8 +45,19 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <button className="snipcart-checkout text-foreground hover:text-primary transition-colors">
+            <button
+              onClick={openCart}
+              className="relative text-foreground hover:text-primary transition-colors"
+            >
               <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                >
+                  {totalItems}
+                </Badge>
+              )}
             </button>
             <Button variant="default" asChild className="ml-4">
               <Link to="/contact">Book Now</Link>
@@ -78,8 +92,19 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <button className="snipcart-checkout text-left py-2 text-foreground hover:text-primary transition-colors">
+              <button
+                onClick={() => {
+                  openCart();
+                  setIsOpen(false);
+                }}
+                className="text-left py-2 text-foreground hover:text-primary transition-colors flex items-center gap-2"
+              >
                 Shopping Cart
+                {totalItems > 0 && (
+                  <Badge variant="destructive" className="text-xs">
+                    {totalItems}
+                  </Badge>
+                )}
               </button>
               <Button variant="default" asChild className="w-full">
                 <Link to="/contact" onClick={() => setIsOpen(false)}>

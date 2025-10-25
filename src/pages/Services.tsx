@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Camera, Smartphone, Code, Lightbulb, Zap, Video, CircleDot, Sparkles, Monitor } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import { toast } from "sonner";
 
 const services = [
   {
@@ -71,6 +73,18 @@ const services = [
 ];
 
 const Services = () => {
+  const { addItem } = useCart();
+
+  const handleAddToCart = (service: typeof services[0]) => {
+    addItem({
+      id: service.id,
+      title: service.title,
+      price: service.price,
+      description: service.description,
+    });
+    toast.success(`${service.title} added to cart!`);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -111,16 +125,7 @@ const Services = () => {
                     </p>
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-border">
                       <span className="text-2xl font-bold text-primary">£{service.price}</span>
-                      <Button
-                        className="snipcart-add-item"
-                        data-item-id={service.id}
-                        data-item-price={service.price}
-                        data-item-url={`/services#${service.id}`}
-                        data-item-description={service.description}
-                        data-item-name={service.title}
-                        data-item-custom1-name="Category"
-                        data-item-custom1-value="Vehicle Customization"
-                      >
+                      <Button onClick={() => handleAddToCart(service)}>
                         Add to Cart
                       </Button>
                     </div>
