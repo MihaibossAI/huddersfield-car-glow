@@ -118,6 +118,8 @@ const Services = () => {
                         data-item-url={`/services#${service.id}`}
                         data-item-description={service.description}
                         data-item-name={service.title}
+                        data-item-custom1-name="Category"
+                        data-item-custom1-value="Vehicle Customization"
                       >
                         Add to Cart
                       </Button>

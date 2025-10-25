@@ -30,12 +30,16 @@
         loadStrategy: 'on-user-interaction',
         modalStyle: 'side',
       };
-      
+
       document.addEventListener('snipcart.ready', function() {
         Snipcart.api.session.setLanguage('en', {
           cart: {
             continue_shopping: 'Continue Shopping'
           }
+        });
+
+        Snipcart.events.on('item.added', function() {
+          Snipcart.api.theme.cart.open();
         });
       });
 ...
