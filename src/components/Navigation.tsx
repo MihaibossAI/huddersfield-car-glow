@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -42,6 +42,9 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
+            <button className="snipcart-checkout text-foreground hover:text-primary transition-colors">
+              <ShoppingCart className="h-5 w-5" />
+            </button>
             <Button variant="default" asChild className="ml-4">
               <Link to="/contact">Book Now</Link>
             </Button>
@@ -75,6 +78,9 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
+              <button className="snipcart-checkout text-left py-2 text-foreground hover:text-primary transition-colors">
+                Shopping Cart
+              </button>
               <Button variant="default" asChild className="w-full">
                 <Link to="/contact" onClick={() => setIsOpen(false)}>
                   Book Now
