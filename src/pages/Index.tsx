@@ -3,7 +3,9 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Sparkles, Lightbulb, Zap, Camera, Smartphone, Code, ArrowRight } from "lucide-react";
+import { Sparkles, Lightbulb, Zap, Camera, Smartphone, Code, ArrowRight, Star } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import heroImage from "@/assets/hero-image.jpg";
 
 const services = [
@@ -13,6 +15,15 @@ const services = [
   { icon: Camera, title: "Dash Cameras", desc: "Front & rear camera systems" },
   { icon: Smartphone, title: "Apple CarPlay", desc: "Wireless smartphone integration" },
   { icon: Code, title: "Coding", desc: "Vehicle programming & features" },
+];
+
+const testimonials = [
+  { name: "James Mitchell", text: "Absolutely brilliant service! The starlight headliner transformed my car completely. Worth every penny!", rating: 5 },
+  { name: "Sarah Thompson", text: "Professional installation and amazing results. The ambient lighting is exactly what I wanted.", rating: 5 },
+  { name: "Mohammed Ali", text: "Quick turnaround and excellent quality. The CarPlay installation was seamless.", rating: 5 },
+  { name: "Emily Roberts", text: "Best decision ever! The F1 brake lights look incredible and the team was so helpful.", rating: 5 },
+  { name: "David Chen", text: "Top-notch work on my dash camera install. Very professional and reasonably priced.", rating: 5 },
+  { name: "Lisa Anderson", text: "The footwell lighting adds such a premium feel. Highly recommend this service!", rating: 5 },
 ];
 
 const Index = () => {
@@ -98,6 +109,49 @@ const Index = () => {
               </Button>
             </div>
           </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-24 px-4 bg-background overflow-hidden">
+          <div className="container mx-auto mb-12">
+            <div className="text-center">
+              <h2 className="text-4xl md:text-5xl font-orbitron font-bold mb-4">
+                What Our <span className="text-primary">Clients Say</span>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Don't just take our word for it
+              </p>
+            </div>
+          </div>
+          
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <Card className="p-6 bg-card border-border h-full">
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
+                    <p className="font-semibold text-foreground">- {testimonial.name}</p>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </section>
 
         {/* CTA Section */}
