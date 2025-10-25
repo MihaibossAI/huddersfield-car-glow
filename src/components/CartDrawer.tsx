@@ -2,10 +2,16 @@ import { useCart } from "@/context/CartContext";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CartDrawer = () => {
   const { items, isOpen, closeCart, updateQuantity, removeItem, totalPrice } = useCart();
+  const navigate = useNavigate();
+
+  const handleProceedToBuy = () => {
+    closeCart();
+    navigate("/contact");
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={closeCart}>
@@ -19,8 +25,11 @@ const CartDrawer = () => {
             <div className="flex-1 flex flex-col items-center justify-center text-center">
               <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
               <p className="text-lg text-muted-foreground mb-6">Your cart is empty</p>
-              <Button onClick={closeCart} asChild>
-                <Link to="/services">Browse Services</Link>
+              <Button onClick={() => {
+                closeCart();
+                navigate("/services");
+              }}>
+                Browse Services
               </Button>
             </div>
           ) : (
@@ -83,8 +92,8 @@ const CartDrawer = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Button className="w-full" size="lg" asChild>
-                    <Link to="/contact">Proceed to Book</Link>
+                  <Button className="w-full" size="lg" onClick={handleProceedToBuy}>
+                    Proceed to Buy
                   </Button>
                   <Button
                     variant="outline"
